@@ -1,0 +1,17 @@
+body {
+    background-image: url('assets/images.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0px 0px 0 2000px rgba(0,0,0,0.3);
+}
+.ytplayer {pointer-events: none;}
+
+#options li {
+    cursor: pointer;
+}
+
+h1 {
+    background-color: rgba(255,255,255,0.6);
+    border-radius: 40px;
+}
