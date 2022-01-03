@@ -5,33 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>dobreRano</title>
     <link rel="stylesheet" href="style.scss">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    
 
-
-    <div class="container d-flex flex-column align-items-center">
-        <h1 class="display-3 text-center mt-5 mb-5 font-weight-bold p-3 pl-5 pr-5" style="font-family: 'Rock Salt', cursive;">Dobré ráno!</h1>
-    <iframe class="ytplayer" id="ytplayer" width="745" height="500" src="https://www.youtube.com/embed/CE7RbDmkDXI?controls=0"  
-    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-        <ul class="list-group mt-5 w-50" id="options">
-            <li class="list-group-item active">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-          </ul>
+    <div id="menuGame">
+        <div class="container d-flex flex-column align-items-center">
+            <h1 class="display-3 text-center mt-2 mb-5 font-weight-bold p-3 pl-5 pr-5"
+                style="font-family: 'Rock Salt', cursive;">Dobré ráno!</h1>
+                <button type="button" class="btn btn-danger btn-lg mt-5 mb-5"
+                onclick="startGame()" style="font-size: 3em;">Připravit snídani!</button>
+                <iframe width="745" height="500" src="https://www.youtube.com/embed/NxzjvM1d-yQ?rel=0&autoplay=1&controls=0" title="YouTube video player" 
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+        </div>
     </div>
-
+     <div id="game">
+        <div class="container d-flex flex-column align-items-center" style="height: 100%;">
+            <h1 class="display-3 text-center mt-2 mb-3 font-weight-bold p-3 pl-5 pr-5"
+                style="font-family: 'Rock Salt', cursive;">Dobré ráno!</h1>
+           <!-- <iframe class="ytplayer" id="ytplayer" width="745" height="500"
+                src="https://www.youtube.com/embed/CE7RbDmkDXI?autoplay=1&controls=0" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>-->
+                <div id="player"></div>
+            <span class="score mt-1">&nbsp;SKÓRE: <span id="scorePoint">0</span> bodů&nbsp;</span>
+            <ul class="list-group mt-2 w-50" id="options"></ul>
+            <button class="btn btn-danger mt-2 mb-5" onclick="submitAnswer(this)" id="answerBtn">OK</button>
+        </div>
+    </div> 
+    <div id="endGame"></div>
     
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 
 </body>
 
