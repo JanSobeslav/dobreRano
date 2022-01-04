@@ -10,35 +10,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <audio autoplay loop id="music"></audio>
 </head>
 
 <body>
-
+    
     <div id="menuGame">
         <div class="container d-flex flex-column align-items-center">
             <h1 class="display-3 text-center mt-2 mb-5 font-weight-bold p-3 pl-5 pr-5"
                 style="font-family: 'Rock Salt', cursive;">Dobré ráno!</h1>
                 <button type="button" class="btn btn-danger btn-lg mt-5 mb-5"
                 onclick="startGame()" style="font-size: 3em;">Připravit snídani!</button>
-                <iframe width="745" height="500" src="https://www.youtube.com/embed/NxzjvM1d-yQ?rel=0&autoplay=1&controls=0" title="YouTube video player" 
-                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
+                <video height="350" id="videoMenu" src="assets/videos/zpom.mp4" type="video/mp4">
+                    
+                </video>
+                <button id="starter" onclick="start()" style="visibility: hidden;"></button>
         </div>
     </div>
      <div id="game">
         <div class="container d-flex flex-column align-items-center" style="height: 100%;">
             <h1 class="display-3 text-center mt-2 mb-3 font-weight-bold p-3 pl-5 pr-5"
                 style="font-family: 'Rock Salt', cursive;">Dobré ráno!</h1>
-           <!-- <iframe class="ytplayer" id="ytplayer" width="745" height="500"
-                src="https://www.youtube.com/embed/CE7RbDmkDXI?autoplay=1&controls=0" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>-->
-                <div id="player"></div>
+                <video height="350" type="video/mp4" id="video" src="assets/videos/1.mp4"></video>
             <span class="score mt-1">&nbsp;SKÓRE: <span id="scorePoint">0</span> bodů&nbsp;</span>
             <ul class="list-group mt-2 w-50" id="options"></ul>
+            <div id="endGame"></div>
             <button class="btn btn-danger mt-2 mb-5" onclick="submitAnswer(this)" id="answerBtn">OK</button>
         </div>
     </div> 
-    <div id="endGame"></div>
+    
     
 
 

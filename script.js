@@ -1,44 +1,44 @@
 let data = {
     option: {
         0: {
-            a: 'Chléb#video',
+            a: 'Chléb#1.mp4',
             b: 'Cereálie#video'
         }
     },
     bread: {
         0: { //videa 2.1 až 2.3
-            a: 'Vezmu nejdřív prkénko.#SHd2zQQsHUw',
-            b: 'Položím chléb na linku.#adresaURL'
+            a: 'Vezmu nejdřív prkénko.#2.1.mp4',
+            b: 'Položím chléb na linku.#2.2.mp4'
         },
         1: { //videa 2.1-1 až 2.1-4
-            a: 'Vezmu zubatý nůž. Na pohodu.#hukEChgGDw',
-            b: 'Vezmu velký nůž. Tím by to mělo jít.#adresaURL',
-            c: 'Vezmu malý, ale ostrý nůž. Je ostrý, však to půjde.#adresaURL',
-            d: 'Vezmu příborový nůž. No, uvidíme, ale tak proč ne?#adresaURL'
+            a: 'Vezmu zubatý nůž. Na pohodu.#2.1-1.mp4',
+            b: 'Vezmu velký nůž. Tím by to mělo jít.#2.1-2.mp4',
+            c: 'Vezmu malý, ale ostrý nůž. Je ostrý, však to půjde.#2.1-3.mp4',
+            d: 'Vezmu příborový nůž. No, uvidíme, ale tak proč ne?#2.1-4.mp4'
         },
         2: { //videa 2.2-1 až 2.2-4
-            a: 'Vezmu zubatý nůž. Na pohodu.#hukEChgGDw',
-            b: 'Vezmu velký nůž. Tím by to mělo jít.#adresaURL',
-            c: 'Vezmu malý, ale ostrý nůž. Je ostrý, však to půjde.#adresaURL',
-            d: 'Vezmu příborový nůž. No, uvidíme, ale tak proč ne?#adresaURL'
+            a: 'Vezmu zubatý nůž. Na pohodu.#2.2-1.mp4',
+            b: 'Vezmu velký nůž. Tím by to mělo jít.#2.2-2.mp4',
+            c: 'Vezmu malý, ale ostrý nůž. Je ostrý, však to půjde.#2.2-3.mp4',
+            d: 'Vezmu příborový nůž. No, uvidíme, ale tak proč ne?#2.2-4.mp4'
         },
         3: { //videa 4.1 až 4.3
-            a: 'Vzít máslo a rozbalit. To je jasný.#adresaURL',
-            b: 'Dát plátek šunky na krajíc. Nic dalšího není přece potřeba.#adresaURL',
-            c: 'Dát plátek sýra na krajíc. Co jiného by tam mělo přijít jako první?#adresaURL'
+            a: 'Vzít máslo a rozbalit. To je jasný.#4.1.mp4',
+            b: 'Dát plátek šunky na krajíc. Nic dalšího není přece potřeba.#4.2.mp4',
+            c: 'Dát plátek sýra na krajíc. Co jiného by tam mělo přijít jako první?#4.3.mp4'
         },
         4: { //videa 4.1-1 až 4.1-3
-            a: 'Vezmu příborový nůž a namažu krajíc máslem. Normálka!#adresaURL',
-            b: 'Namažu krajíc přímo máslem. Aspoň se nic nezašpiní.#adresaURL',
-            c: 'Vezmu banán a namažu s ním máslo na krajíc. A co jako? Jste to nikdy nezkoušeli?#adresaURL'
+            a: 'Vezmu příborový nůž a namažu krajíc máslem. Normálka!#4.1-1.mp4',
+            b: 'Namažu krajíc přímo máslem. Aspoň se nic nezašpiní.#4.1-2.mp4',
+            c: 'Vezmu banán a namažu s ním máslo na krajíc. A co jako? Jste to nikdy nezkoušeli?#4.1-3.mp4'
         },
         5: { //videa 5 a 6
-            a: 'Teď tam přijde plátek šunky!#v',
-            b: 'SÝÝÝÝÝÝR!#v',
+            a: 'Teď tam přijde plátek šunky!#5.mp4',
+            b: 'SÝÝÝÝÝÝR!#4.3.mp4',
         },
         6: { //videa 7 a 8
-            a: 'No a nakonec šunka. Jak jinak?!#v',
-            b: 'No a nakonec sýr. Jak jinak?!#v',
+            a: 'No a nakonec šunka. Jak jinak?!#7.mp4',
+            b: 'No a nakonec sýr. Jak jinak?!#8.mp4',
         }
     },
     cereal: {
@@ -66,35 +66,8 @@ let tag = document.createElement('script');
 let isGameReady = false;
 let typeOfQuest = data.option;
 let isPlank;
-
-tag.src = "https://www.youtube.com/iframe_api";
-let firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-var player;
-
-//Init API
-window.onYouTubeIframeAPIReady = function () {
-    player = new YT.Player('player', {
-        height: '500',
-        width: '745',
-        playerVars: {
-            'controls': 0,
-            'autoplay': 1,
-            'rel': 0,
-            'fs': 0,
-        },
-        videoId: "",
-        events: {
-            'onReady': onPlayerReady,
-        },
-    });
-};
-
-// Launch video as it's ready
-function onPlayerReady(event) {
-
-}
+let video;
+let dur;
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -105,7 +78,12 @@ document.addEventListener("DOMContentLoaded", function () {
 function startGame() {
     document.getElementById("menuGame").innerHTML = '';
     document.getElementById("game").style.visibility = "visible";
-    player.loadVideoById("CHDKHwq8ZTs", "large"); //vložit úvodní video
+    //player.loadVideoById("jfhIVfLwixI", "large"); //vložit úvodní video
+    $("#music").attr("src", "assets/music/normal.mp3");
+    $("#music")[0].play();
+    video = document.getElementById("video");
+    video.play();
+    setTimeout(() => { video.pause(); }, parseInt(String(video.duration).replace('.', '')) - 3400);
 }
 
 function submitAnswer(el) {
@@ -121,34 +99,52 @@ function submitAnswer(el) {
     switch (answer.value) {
         case 1:
             score += 300;
+            if ($("#music").attr("src") != 'assets/music/normal.mp3') {
+                $("#music").attr("src", "assets/music/normal.mp3");
+                $("#music")[0].play();
+            }
             break;
-
         case 2:
             score += 200;
+            if ($("#music").attr("src") != 'assets/music/normal.mp3') {
+                $("#music").attr("src", "assets/music/normal.mp3");
+                $("#music")[0].play();
+            }
             break;
         case 3:
             score -= 100;
+            if ($("#music").attr("src") != 'assets/music/katastrofa.mp3') {
+                if (cisloOtazky != 3) {
+                    $("#music").attr("src", "assets/music/katastrofa.mp3");
+                    $("#music")[0].play();
+                }
+            }
             break;
         default:
             score -= 500;
+            $("#music").attr("src", "assets/music/katastrofa.mp3");
+            $("#music")[0].play();
             break;
     }
+
     document.getElementById('scorePoint').innerHTML = score;
     document.getElementById('options').innerHTML = '';
-    
-    player.loadVideoById(answer.id, "large");
+    video.pause();
+    video.src = "assets/videos/" + answer.id;
+    video.play();
 
     if (answer.value === 1 && typeOfQuest == data.option) {
         typeOfQuest = data.bread;
-        cisloOtazky = 0;
+        cisloOtazky = -1;
     } else if (answer.value === 2 && typeOfQuest == data.option) {
         typeOfQuest = data.cereal;
-        cisloOtazky = 0;
+        cisloOtazky = -1;
     }
     if (cisloOtazky == 0 && answer.value == 2) cisloOtazky++;
     if (cisloOtazky == 1) cisloOtazky++;
-    
+
     if (cisloOtazky == 5 && (answer.value == 1 || answer.value == 2)) {
+        cisloOtazky++;
         if (answer.value == 1) {
             data.bread[cisloOtazky].a = data.bread[cisloOtazky].b;
             delete data.bread[cisloOtazky].b;
@@ -234,6 +230,11 @@ function displayQuestion() {
         } else {
             ul.append(optionA);
         }
+    }
+    if (!typeOfQuest[cisloOtazky]) {
+        document.getElementById("endGame").innerHTML = "KONEC";
+        document.getElementById("answerBtn").style.visibility = "hidden";
+        document.getElementById('scorePoint').innerHTML = score - time;
     }
 }
 
