@@ -14,32 +14,37 @@
 </head>
 
 <body>
-    
+
     <div id="menuGame">
         <div class="container d-flex flex-column align-items-center">
             <h1 class="display-3 text-center mt-2 mb-5 font-weight-bold p-3 pl-5 pr-5"
                 style="font-family: 'Rock Salt', cursive;">Dobré ráno!</h1>
-                <button type="button" class="btn btn-danger btn-lg mt-5 mb-5"
-                onclick="startGame()" style="font-size: 3em;">Připravit snídani!</button>
-                <video height="350" id="videoMenu" src="assets/videos/zpom.mp4" type="video/mp4">
-                    
-                </video>
-                <button id="starter" onclick="start()" style="visibility: hidden;"></button>
+            <button type="button" class="btn btn-danger btn-lg mt-5 mb-5" onclick="startGame(this)"
+                style="font-size: 3em;">Připravit snídani!</button>
+            <video height="350" id="videoMenu" src="assets/videos/zpom.mp4" type="video/mp4" loop>
+
+            </video>
         </div>
     </div>
-     <div id="game">
-        <div class="container d-flex flex-column align-items-center" style="height: 100%;">
+    <div id="game" style="height: 100%;">
+        <div class="container align-items-center" style="height: 100%;">
             <h1 class="display-3 text-center mt-2 mb-3 font-weight-bold p-3 pl-5 pr-5"
                 style="font-family: 'Rock Salt', cursive;">Dobré ráno!</h1>
-                <video height="350" type="video/mp4" id="video" src="assets/videos/1.mp4"></video>
+                <div class="d-flex flex-row align-items-center">
+                     <video height="450" type="video/mp4" id="video" src="assets/videos/1.mp4"></video>
+                     <ul class="list-group ml-2 w-50" id="options"></ul>
+                     <div id="endGame" class="display-1 mt-5" style="font-family: 'Rock Salt', bold;"></div>
+                </div>
+           
             <span class="score mt-1">&nbsp;SKÓRE: <span id="scorePoint">0</span> bodů&nbsp;</span>
-            <ul class="list-group mt-2 w-50" id="options"></ul>
-            <div id="endGame"></div>
-            <button class="btn btn-danger mt-2 mb-5" onclick="submitAnswer(this)" id="answerBtn">OK</button>
+
+            
+            
+
         </div>
-    </div> 
-    
-    
+    </div>
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

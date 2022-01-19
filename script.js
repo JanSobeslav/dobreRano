@@ -2,7 +2,7 @@ let data = {
     option: {
         0: {
             a: 'Chléb#1.mp4',
-            b: 'Cereálie#video'
+            b: 'Cereálie#cereal/1.mp4'
         }
     },
     bread: {
@@ -43,9 +43,9 @@ let data = {
     },
     cereal: {
         0: {
-            a: 'Otevřu nejdříve sáček.#video',
-            b: 'Vezmu misku nejdřív. Kam by se to pak sypalo?!#video',
-            c: 'Miska ano, ale malá, přeci jen nemám takový hlad.#video'
+            a: 'Otevřu nejdříve sáček.#cereal/2.mp4',
+            b: 'Vezmu misku nejdřív. Kam by se to pak sypalo?!#cereal/3.1.mp4',
+            c: 'Miska ano, ale malá, přeci jen nemám takový hlad.#cereal/3.2.mp4'
         },
         1: {
             a: 'Nasypu cereálie do misky!#video'
@@ -65,25 +65,36 @@ let time = 0
 let tag = document.createElement('script');
 let isGameReady = false;
 let typeOfQuest = data.option;
-let isPlank;
+let typeOfBreakfast;
+let startCount = 0;
 let video;
 let dur;
+let sBowl;
+let opened;
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    displayQuestion();
     setInterval(() => { time -= 1; }, 1000);
 });
 
-function startGame() {
-    document.getElementById("menuGame").innerHTML = '';
-    document.getElementById("game").style.visibility = "visible";
-    //player.loadVideoById("jfhIVfLwixI", "large"); //vložit úvodní video
-    $("#music").attr("src", "assets/music/normal.mp3");
-    $("#music")[0].play();
-    video = document.getElementById("video");
-    video.play();
-    setTimeout(() => { video.pause(); }, parseInt(String(video.duration).replace('.', '')) - 3400);
+function startGame(btn) {
+    btn.innerHTML = 'Připraven?';
+    if (startCount === 1) {
+        document.getElementById("menuGame").innerHTML = '';
+        document.getElementById("game").style.visibility = "visible";
+        video = document.getElementById("video");
+        video.play();
+        setTimeout(() => { video.pause(); displayQuestion(); }, parseInt(String(video.duration).replace('.', '')) - 3400);
+    } else {
+        $("#music").attr("src", "assets/music/normal.mp3");
+        $("#music")[0].play();
+        video = document.getElementById("videoMenu");
+        video.play();
+        startCount++;
+    }
+
+
+
 }
 
 function submitAnswer(el) {
@@ -94,6 +105,116 @@ function submitAnswer(el) {
             answer = ul.childNodes[i];
             break;
         }
+    }
+    document.getElementById('options').innerHTML = '';
+    if (answer.id !== 'video') {
+        video.pause();
+        video.src = "assets/videos/" + answer.id;
+        video.play();
+    }
+
+    if (answer.value === 1 && typeOfQuest == data.option) {
+        typeOfQuest = data.bread;
+        typeOfBreakfast = data.option[0].a;
+        cisloOtazky = -1;
+
+    } else if (answer.value === 2 && typeOfQuest == data.option) {
+        typeOfQuest = data.cereal;
+        typeOfBreakfast = data.option[0].b;
+        cisloOtazky = -1;
+    }
+    if (typeOfBreakfast === 'Chléb#1.mp4') {
+        if (cisloOtazky == 1) cisloOtazky++;
+        if (cisloOtazky == 0 && answer.value == 2) cisloOtazky++;
+
+
+        if (cisloOtazky == 5 && (answer.value == 1 || answer.value == 2)) {
+            cisloOtazky++;
+            if (answer.value == 1) {
+                data.bread[cisloOtazky].a = data.bread[cisloOtazky].b;
+                delete data.bread[cisloOtazky].b;
+                cisloOtazky--;
+            }
+            if (answer.value == 2) {
+                delete data.bread[cisloOtazky].b;
+                cisloOtazky--;
+            }
+        }
+        if (cisloOtazky == 3 && (answer.value == 2 || answer.value == 3)) {
+            cisloOtazky += 3;
+            if (answer.value == 2) {//6a 
+                data.bread[cisloOtazky].a = data.bread[cisloOtazky].b;
+                delete data.bread[cisloOtazky].b;
+                cisloOtazky--;
+            }
+            if (answer.value == 3) {//6b
+                delete data.bread[cisloOtazky].b;
+                cisloOtazky--;
+            }
+        }
+
+        cisloOtazky++;
+        video.addEventListener('ended', myHandler, false);
+    }
+
+    if (typeOfBreakfast === 'Cereálie#cereal/1.mp4') {
+        if ((cisloOtazky == 0 && answer.value == 1) && data.cereal[0].c) {
+            data.cereal[cisloOtazky].a = data.cereal[cisloOtazky].b;
+            data.cereal[cisloOtazky].b = data.cereal[cisloOtazky].c;
+            delete data.cereal[cisloOtazky].c;
+            cisloOtazky--;
+            console.log(data);
+        }
+
+        if (cisloOtazky == 0 && !data.cereal[0].c) {
+            if (answer.value == 1) sBowl = false;
+            if (answer.value == 2) sBowl = true;
+            console.log(sBowl);
+        } else if (cisloOtazky == 0 && (answer.value == 2 || answer.value == 3)) {
+            if (answer.value == 2) sBowl = false;
+            if (answer.value == 3) sBowl = true;
+        }
+
+        if (cisloOtazky == 1 && !data.cereal[0].c) {
+            video.pause();
+            if (!sBowl) { video.src = "assets/videos/cereal/3.1-1.mp4"; }
+            if (sBowl) { video.src = "assets/videos/cereal/3.2-1.mp4"; }
+            video.play();
+        } else if (cisloOtazky == 1 && data.cereal[0].c) {
+            video.pause();
+            if (!sBowl) video.src = "assets/videos/cereal/3.1-2.mp4";
+            if (sBowl) video.src = "assets/videos/cereal/3.2-2.mp4";
+            video.play();
+        }
+
+        if (cisloOtazky == 2 && !data.cereal[0].c) {
+            video.pause();
+            if (sBowl) {video.src = "assets/videos/cereal/4.2.mp4"; answer.value = 5;}
+            if (!sBowl) video.src = "assets/videos/cereal/4.1.mp4";
+            video.play();
+        } else if (cisloOtazky == 2 && data.cereal[0].c) {
+            answer.value = 5;
+            video.pause();
+            if (sBowl) video.src = "assets/videos/cereal/4.4.mp4";
+            if (!sBowl) video.src = "assets/videos/cereal/4.3.mp4";
+            video.play();
+        }
+
+        if (cisloOtazky == 3 && !data.cereal[0].c) {
+            video.pause();
+            if (sBowl) { video.src = "assets/videos/cereal/5.2.mp4"; answer.value = 5; }
+            if (!sBowl) video.src = "assets/videos/cereal/4.1.mp4";
+            video.play();
+        } else if (cisloOtazky == 3 && data.cereal[0].c) {
+            answer.value = 5;
+            video.pause();
+            if (sBowl) video.src = "assets/videos/cereal/5.4.mp4";
+            if (!sBowl) video.src = "assets/videos/cereal/5.4.mp4";
+            video.play();
+        }
+
+        cisloOtazky++;
+        video.addEventListener('ended', myHandler, false);
     }
 
     switch (answer.value) {
@@ -122,53 +243,19 @@ function submitAnswer(el) {
             break;
         default:
             score -= 500;
-            $("#music").attr("src", "assets/music/katastrofa.mp3");
-            $("#music")[0].play();
+            if ($("#music").attr("src") != 'assets/music/katastrofa.mp3') {
+                $("#music").attr("src", "assets/music/katastrofa.mp3");
+                $("#music")[0].play();
+            }
             break;
     }
 
     document.getElementById('scorePoint').innerHTML = score;
-    document.getElementById('options').innerHTML = '';
-    video.pause();
-    video.src = "assets/videos/" + answer.id;
-    video.play();
 
-    if (answer.value === 1 && typeOfQuest == data.option) {
-        typeOfQuest = data.bread;
-        cisloOtazky = -1;
-    } else if (answer.value === 2 && typeOfQuest == data.option) {
-        typeOfQuest = data.cereal;
-        cisloOtazky = -1;
-    }
-    if (cisloOtazky == 0 && answer.value == 2) cisloOtazky++;
-    if (cisloOtazky == 1) cisloOtazky++;
-
-    if (cisloOtazky == 5 && (answer.value == 1 || answer.value == 2)) {
-        cisloOtazky++;
-        if (answer.value == 1) {
-            data.bread[cisloOtazky].a = data.bread[cisloOtazky].b;
-            delete data.bread[cisloOtazky].b;
-            cisloOtazky--;
-        }
-        if (answer.value == 2) {
-            delete data.bread[cisloOtazky].b;
-            cisloOtazky--;
-        }
-    }
-    if (cisloOtazky == 3 && (answer.value == 2 || answer.value == 3)) {
-        cisloOtazky += 3;
-        if (answer.value == 2) {//6a 
-            data.bread[cisloOtazky].a = data.bread[cisloOtazky].b;
-            delete data.bread[cisloOtazky].b;
-            cisloOtazky--;
-        }
-        if (answer.value == 3) {//6b
-            delete data.bread[cisloOtazky].b;
-            cisloOtazky--;
-        }
-    }
-    cisloOtazky++;
+}
+function myHandler(e) {
     displayQuestion();
+
 }
 
 function itemOnClick(el) {
@@ -177,6 +264,7 @@ function itemOnClick(el) {
         li.classList.remove("active");
     }
     el.classList.add('active');
+    submitAnswer(el);
 }
 
 //zobrazení možností s podmínkou, jež zajišťuje rozmězí otázek od 1 do 4
@@ -235,6 +323,7 @@ function displayQuestion() {
         document.getElementById("endGame").innerHTML = "KONEC";
         document.getElementById("answerBtn").style.visibility = "hidden";
         document.getElementById('scorePoint').innerHTML = score - time;
+        video.addEventListener('ended', video.remove(), false);
     }
 }
 

@@ -16,11 +16,6 @@ body {
     cursor: pointer;
 }
 
-h1 {
-    background-color: rgba(255,255,255,0.6);
-    border-radius: 40px;
-}
-
 .score {
     font-size: 1.5em;
     color: black;
@@ -33,4 +28,8 @@ button {
 }
 button:hover {
     background-color: #4d0322 !important;
+}
+
+li:hover {
+    background-color: #774c62;
 }
