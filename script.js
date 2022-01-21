@@ -62,7 +62,6 @@ let data = {
 let cisloOtazky = 0;
 let score = 0;
 let time = 0
-let tag = document.createElement('script');
 let isGameReady = false;
 let typeOfQuest = data.option;
 let typeOfBreakfast;
@@ -70,7 +69,7 @@ let startCount = 0;
 let video;
 let dur;
 let sBowl;
-let opened;
+let opened = false;
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -95,6 +94,27 @@ function startGame(btn) {
 
 
 
+}
+
+function restart() {
+    cisloOtazky = 0;
+    score = 0;
+    time = 0
+    isGameReady = false;
+    typeOfQuest = data.option;
+    typeOfBreakfast;
+    startCount = 0;
+    video;
+    dur;
+    sBowl;
+    opened = false;
+    video.pause();
+    video = document.getElementById("video");
+    video.src = "assets/videos/1.mp4";
+    video.play();
+    setTimeout(() => { video.pause(); displayQuestion(); }, parseInt(String(video.duration).replace('.', '')) - 3400);
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('scorePoint').innerHTML = score;
 }
 
 function submitAnswer(el) {
@@ -162,37 +182,44 @@ function submitAnswer(el) {
             data.cereal[cisloOtazky].a = data.cereal[cisloOtazky].b;
             data.cereal[cisloOtazky].b = data.cereal[cisloOtazky].c;
             delete data.cereal[cisloOtazky].c;
+            opened = true;
             cisloOtazky--;
             console.log(data);
         }
 
-        if (cisloOtazky == 0 && !data.cereal[0].c) {
+        if (cisloOtazky == 0 && opened) {
+            console.log(cisloOtazky);
             if (answer.value == 1) sBowl = false;
             if (answer.value == 2) sBowl = true;
             console.log(sBowl);
         } else if (cisloOtazky == 0 && (answer.value == 2 || answer.value == 3)) {
+            console.log(cisloOtazky);
             if (answer.value == 2) sBowl = false;
             if (answer.value == 3) sBowl = true;
         }
 
-        if (cisloOtazky == 1 && !data.cereal[0].c) {
+        if (cisloOtazky == 1 && opened) {
+            console.log(cisloOtazky);
             video.pause();
             if (!sBowl) { video.src = "assets/videos/cereal/3.1-1.mp4"; }
             if (sBowl) { video.src = "assets/videos/cereal/3.2-1.mp4"; }
             video.play();
-        } else if (cisloOtazky == 1 && data.cereal[0].c) {
+        } else if (cisloOtazky == 1 && !opened) {
+            console.log(cisloOtazky);
             video.pause();
             if (!sBowl) video.src = "assets/videos/cereal/3.1-2.mp4";
             if (sBowl) video.src = "assets/videos/cereal/3.2-2.mp4";
             video.play();
         }
 
-        if (cisloOtazky == 2 && !data.cereal[0].c) {
+        if (cisloOtazky == 2 && opened) {
+            console.log(cisloOtazky);
             video.pause();
-            if (sBowl) {video.src = "assets/videos/cereal/4.2.mp4"; answer.value = 5;}
+            if (sBowl) { video.src = "assets/videos/cereal/4.2.mp4"; answer.value = 5; }
             if (!sBowl) video.src = "assets/videos/cereal/4.1.mp4";
             video.play();
-        } else if (cisloOtazky == 2 && data.cereal[0].c) {
+        } else if (cisloOtazky == 2 && !opened) {
+            console.log(cisloOtazky);
             answer.value = 5;
             video.pause();
             if (sBowl) video.src = "assets/videos/cereal/4.4.mp4";
@@ -200,12 +227,16 @@ function submitAnswer(el) {
             video.play();
         }
 
-        if (cisloOtazky == 3 && !data.cereal[0].c) {
+        if (cisloOtazky == 3 && opened) {
+            console.log("ANOOOO");
+            console.log(cisloOtazky);
             video.pause();
             if (sBowl) { video.src = "assets/videos/cereal/5.2.mp4"; answer.value = 5; }
-            if (!sBowl) video.src = "assets/videos/cereal/4.1.mp4";
+            if (!sBowl) { video.src = "assets/videos/cereal/5.1.mp4"; }
             video.play();
-        } else if (cisloOtazky == 3 && data.cereal[0].c) {
+        } else if (cisloOtazky == 3 && !opened) {
+            console.log("NEEEE");
+            console.log(cisloOtazky);
             answer.value = 5;
             video.pause();
             if (sBowl) video.src = "assets/videos/cereal/5.4.mp4";
@@ -324,6 +355,9 @@ function displayQuestion() {
         document.getElementById("answerBtn").style.visibility = "hidden";
         document.getElementById('scorePoint').innerHTML = score - time;
         video.addEventListener('ended', video.remove(), false);
+    } else {
+        document.getElementById("endGame").innerHTML = "";
+        document.getElementById("answerBtn").style.visibility = "visible";
     }
 }
 
