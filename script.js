@@ -102,7 +102,7 @@ function restart() {
     time = 0
     isGameReady = false;
     typeOfQuest = data.option;
-    typeOfBreakfast;
+    typeOfBreakfast = '';
     startCount = 0;
     video;
     dur;
@@ -178,7 +178,7 @@ function submitAnswer(el) {
     }
 
     if (typeOfBreakfast === 'Cereálie#cereal/1.mp4') {
-        if ((cisloOtazky == 0 && answer.value == 1) && data.cereal[0].c) {
+        if ((cisloOtazky == 0 && answer.value == 1) && !opened) {
             data.cereal[cisloOtazky].a = data.cereal[cisloOtazky].b;
             data.cereal[cisloOtazky].b = data.cereal[cisloOtazky].c;
             delete data.cereal[cisloOtazky].c;
